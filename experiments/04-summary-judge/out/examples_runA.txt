@@ -1,0 +1,56 @@
+Question: Who was born first, Vladimir Nabokov or Harper Lee?
+Gold: Vladimir Nabokov; Harper Lee
+turn 1: <search>Vladimir Nabokov and Harper Lee birthdate</search>
+turn 2: Vladimir Nabokov was born first as Vladimir Nabokov with The Stories of Vladimir Nabokov (in some British editions, The Collected Stories) as the collection of Vladimir Nabokov's short stories published posthumously, and Bachmann (short story) as another short story by Vladimir Nabokov under his nom-de-plume V. Sirin written in Berlin in 1924. Harper Lee was born later with Harper Lee as the author of To Kill a Mockingbird, a Pulitzer Prize-winning novel set in the American South during the 1930s. <done/>
+retrieved: The Stories of Vladimir Nabokov; Bachmann (short story); The Vane Sisters
+end: done, recall@9 0.0, judge 1.0, named 2, unsupported 2
+
+Question: Are both Cypress and Ajuga genera?
+Gold: Ajuga; Cypress
+turn 1: <search>Cypress and Ajuga genera</search>
+turn 2: Cypress-pine and Ajugeae are both genera, Cypress-pine includes genera like Cupressus alongside other cypress-related genera such as Cypress-pine itself and Ajuga genera like Acrymia, Ajuga, Cymaria, Garrettia, and Holocheila. Ajugeae encompasses Ajuga and related genera like Acrymia, Ajuga, Cymaria, Garrettia, and Holocheila alongside Cupressus genus cypress plants. <done/>
+retrieved: Cypress-pine; Ajugeae; Cupressus
+end: done, recall@9 0.0, judge 1.0, named 2, unsupported 2
+
+Question: Steven Covey, the father of Sean Covey, wrote what similar sounding title to The 7 Habits of Highly Effective Teens?
+Gold: Stephen Covey; The 7 Habits of Highly Effective Teens
+turn 1: <search>Steven Covey father of Sean Covey wrote similar title to The 7 Habits of Highly Effective Teens</search>
+turn 2: Steven Covey father of Sean Covey, Steven Covey (Stephen Covey) wrote The 7 Habits of Highly Effective Teens alongside Sean Covey (Sean Covey (born September 17, 1964) is an American author, motivational speaker, and publishing executive providing business leadership and time management educational tools for organizations and individuals) as The 7 Habits of Highly Effective Teens through Touchstone Books on October 9, 1998, based on The Seven Habits of Highly Effective People principles. <done/>
+retrieved: The 7 Habits of Highly Effective Teens; Sean Covey; Delayed judgement
+end: done, recall@9 0.5, judge 1.0, named 2, unsupported 1
+
+Question: Which Football Club is based in the capital of Lesotho?
+Gold: Maseru; Lerotholi Polytechnic FC
+turn 1: <search>Football Club based in the capital of Lesotho</search>
+turn 2: Football Club based in the capital of Lesotho is Matlama FC with Matlama Football Club being the champions of Lesotho and the most successful club in the country based in Maseru, capital of Lesotho, alongside Liphakoe FC and Lesotho Paramilitary Forces football club based in Maseru, capital of Lesotho. <done/>
+retrieved: Matlama FC; Liphakoe FC; Lesotho Paramilitary Forces
+end: done, recall@9 0.0, judge 0.5, named 1, unsupported 1
+
+Question: What singer-songwriter performed the country pop sing "Fifteen"?
+Gold: Taylor Swift; Fifteen (song)
+turn 1: <search> singer-songwriter performed country pop sing "Fifteen" </search>
+turn 2: Singer-songwriter Taylor Swift performed the country pop sing "Fifteen" (song) (Fifteen (song) (Taylor Swift song) (Fifteen (song) (Taylor Swift song) (Taylor Swift and Colbie Caillat song)) on American singer-songwriter Taylor Swift's album Fearless (2008) at Hendersonville High School in Hendersonville, Tennessee, inspired by Taylor Swift's freshman year experiences there along with her best friend Abigail Anderson. <done/>
+retrieved: Fifteen (song); Bryan Fustukian; Breathe (Taylor Swift song)
+end: done, recall@9 0.5, judge 1.0, named 2, unsupported 1
+
+Question: Near which town did the family of author of the "Adventures of Huckleberry Finn" own several tracts of land?
+Gold: Santa Fe, Missouri; Mark Twain
+turn 1: <search>Adventures of Huckleberry Finn author family owned tracts of land in town</search>
+turn 2: Near the towns of Hannibal, Missouri, and St. Louis, Missouri, the family of author Mark Twain (Huckleberry Finn and His Friends author and Adventures of Huckleberry Finn author) owned several tracts of land through Huckleberry no Bōken (ハックルベリィの冒険 ) anime series and Tom Sawyer &amp; Huckleberry Finn film series. <done/>
+retrieved: Huckleberry Finn and His Friends; Huckleberry no Bōken; Tom Sawyer &amp; Huckleberry Finn
+end: done, recall@9 0.0, judge 0.5, named 1, unsupported 1
+
+Question: When did British politician Damian Green state that said that e-Borders would be collecting information an all passengers on 100% of non-EEA flights to the UK?
+Gold: E-Borders; Damian Green
+turn 1: <search>British politician Damian Green stated e-Borders would collect information on all passengers on non-EEA flights to UK since</search>
+turn 2: British politician Damian Green stated that e-Borders would be collecting information on all passengers on non-EEA flights to the UK since e-Borders was an advanced passenger information programme aiming to collect and store information on passengers and crew entering and leaving the United Kingdom, with Damian Green (Damian Green) as British politician for E-Borders project supporting the implementation by April 2012 to collect information on all passengers on 100% of non-EEA flights to the UK alongside voluntary information sharing with EU carriers and ports supply to UK Border Agency. <done/>
+retrieved: E-Borders; Damian Green; PauknAir Flight 4101
+end: done, recall@9 1.0, judge 1.0, named 2, unsupported 0
+
+Question: What is the name of the 1988 film starring Gene Bervoets that was based on the Dutch to English translated novel, "The Vanishing"?
+Gold: The Golden Egg; The Vanishing (1988 film)
+turn 1: <search>1988 film starring Gene Bervoets based on Dutch to English translated novel "The Vanishing"</search>
+turn 2: The Vanishing (1988 film) | The Vanishing (Dutch: Spoorloos , literally "Traceless" or "Without a Trace") is the 1988 film starring Gene Bervoets based on the Dutch to English translated novel "The Vanishing" (The Golden Egg / The Vanishing American). <done/>
+retrieved: The Vanishing (1988 film); The Vanishing American; The Golden Egg
+end: done, recall@9 1.0, judge 1.0, named 2, unsupported 0
+

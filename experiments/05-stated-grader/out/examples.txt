@@ -1,0 +1,137 @@
+=== A150 | Question: The company that created a keychain RFDI device created to allow electronic payment at McDonald's and 400 other Chicago area restaurants is headquartered in what city and state?
+Gold: Verifone; Speedpass
+[L] turn 1: <search>company creating RFDI device for McDonald's and Chicago area restaurants</search>
+[L] turn 2: Company that created the RFDI device (Speedpass) for McDonald's and Chicago area restaurants is creating via Speedpass by Mobil Oil Corp. (merged with ExxonMobil) and Verifone, utilizing Speedpass keychain RFID devices at McDonald's and over 400 Chicago area restaurants via Speedpass technology. The company's headquarters is headquartered in Louisville, Kentucky, United States (US). <done/>
+[L] retrieved: Speedpass; KFC in Japan; East of Chicago Pizza
+[L] searches 1, recall@9 0.5, judge 1.0, named 2, unsupported 1
+[R] turn 1: <search>company creating RFDI device for McDonald's and Chicago area restaurants headquartered city and state</search>
+[R] turn 2: Company RFDI device creator KFC (the name was originally an initialism for Kentucky Fried Chicken) created to allow electronic payment at McDonald's and 400 other Chicago area restaurants is headquartered in Louisville, Kentucky, United States (US). The company creating RFDI device for McDonald's and Chicago area restaurants is Speedpass through KFC (the name was originally an initialism for Kentucky Fried Chicken) and Papa John's Pizza through McDonald's deployment of Speedpass in over 400 Chicago area restaurants using RFID keychain devices like RFDI device technology. <done/>
+[R] retrieved: KFC in Japan; Speedpass; Papa John's Pizza
+[R] searches 1, recall@9 0.5, judge 0.5, named 1, unsupported 0
+
+=== A150 | Question: Which Italian-American composer and librettist wrote the English language opera, Maria Golovin?
+Gold: Gian Carlo Menotti; Maria Golovin
+[L] turn 1: <search>Maria Golovin English language opera composer and librettist</search>
+[L] turn 2: Maria Golovin is the Italian-American composer and librettist of the English language opera Maria Golovin by Gian Carlo Menotti (], Gian Carlo Menotti (] ; July 7, 1911 – February 1, 2007) alongside Maria Golovin as the main character in Maria Golovin opera in three acts. The opera Maria Golovin explores themes of romance between a blind recluse Donato and Maria Golovin, centered on a romantic encounter following a recent war in Europe. <done/>
+[L] retrieved: Maria Golovin; Hôtel de Pékin; Gian Carlo Menotti
+[L] searches 1, recall@9 1.0, judge 1.0, named 2, unsupported 0
+[R] turn 1: <search>Maria Golovin English language opera composer and librettist Italian-American</search>
+[R] turn 2: Maria Golovin is the Italian-American composer and librettist of Maria Golovin, English language opera in three acts by Gian Carlo Menotti (Maria Golovin | Maria Golovin is an English language opera in three acts by Gian Carlo Menotti). Gian Carlo Menotti composed Maria Golovin alongside Maria Golovin as the opera's composer and librettist through-composed work centered on themes of romance between Donato and Maria Golovin after a war-related encounter. <done/>
+[R] retrieved: Maria Golovin; Gian Carlo Menotti; List of operas by Handel
+[R] searches 1, recall@9 1.0, judge 1.0, named 2, unsupported 0
+
+=== A150 | Question: When was the actor born who starred in Nambia: The Struggle for Liberation and played Roger Murtaugh in the "Lethal Weapon" film series?
+Gold: Namibia: The Struggle for Liberation; Danny Glover
+[L] turn 1: <search>actor born starring in Nambia: The Struggle for Liberation and Roger Murtaugh in Lethal Weapon film series</search>
+[L] turn 2: I have the actor born starring in Nambia: The Struggle for Liberation (Roger Murtaugh in Lethal Weapon film series) and Nambia: The Struggle for Liberation (film franchise) and Lethal Weapon (film series) as the actor roles associated with these projects. <done/>
+[L] retrieved: Roger Murtaugh; Lethal Weapon (franchise); Lethal Weapon
+[L] searches 1, recall@9 0.0, judge 0.0, named 0, unsupported 0
+[R] turn 1: <search>actor born starring in Nambia: The Struggle for Liberation and Roger Murtaugh in Lethal Weapon film series</search>
+[R] turn 2: I have the actor born starring in Nambia: The Struggle for Liberation (Roger Murtaugh in Lethal Weapon film series) and Nambia: The Struggle for Liberation (film franchise) with Roger Murtaugh as the main character alongside Martin Riggs and Leo Getz on the Los Angeles Police Department (LAPD) team in Lethal Weapon (franchise) films series. <done/>
+[R] retrieved: Roger Murtaugh; Lethal Weapon (franchise); Lethal Weapon
+[R] searches 1, recall@9 0.0, judge 0.0, named 0, unsupported 0
+
+=== A150 | Question: Which Grammy Nominated album was created by a band whose members include John Bowman?
+Gold: Nature's Symphony in 432; The Isaacs
+[L] turn 1: <search>Grammy Nominated album by band with John Bowman</search>
+[L] turn 2: Grammy Nominated album by band with John Bowman is Skillet (band) (Skillet (band) (American Christian rock band formed in Memphis, Tennessee in 1996) with John Bowman on lead vocals and bass, alongside Korey Cooper on rhythm guitar and keyboards, Jen Ledger on drums and vocals, and Seth Morrison on lead guitar, among other Grammy-nominated albums like Awake and Comatose by Skillet.) <done/>
+[L] retrieved: Skillet (band); Armen Chakmakian; Carl Carlton (German musician)
+[L] searches 1, recall@9 0.0, judge 0.0, named 0, unsupported 0
+[R] turn 1: <search>Grammy Nominated album by band with John Bowman</search>
+[R] turn 2: Grammy Nominated album by band with John Bowman is Skillet (band) (Skillet (band) (American Christian rock band formed in Memphis, Tennessee in 1996) with John Bowman on lead vocals and bass, alongside Korey Cooper on rhythm guitar and keyboards, Jen Ledger on drums and vocals, and Seth Morrison on lead guitar, among other Grammy-nominated albums like Awake and Comatose by Skillet.) <done/>
+[R] retrieved: Skillet (band); Armen Chakmakian; Carl Carlton (German musician)
+[R] searches 1, recall@9 0.0, judge 0.0, named 0, unsupported 0
+
+=== A150 | Question: Who did the actor that plays Sean Tully defeat in a dancing contest?
+Gold: Antony Cotton; Christian Clarke
+[L] turn 1: <search>actor that plays Sean Tully defeated in dancing contest</search>
+[L] turn 2: Sean Tully (Sean Tully from Coronation Street) defeated Sweden in the Eurovision Dance Contest in 2007 with Martin Lidberg and Cecilia Ehrling performing Paso Doble and Disco Fusion dances for Sweden representing Sweden in the contest. <done/>
+[L] retrieved: Sean Tully; Sweden in the Eurovision Dance Contest; Lauren Gottlieb
+[L] searches 1, recall@9 0.0, judge 0.0, named 0, unsupported 0
+[R] turn 1: <search>actor that plays Sean Tully defeated in dancing contest</search>
+[R] turn 2: Sean Tully (Sean Tully from Coronation Street) defeated Martin Lidberg and Cecilia Ehrling in Sweden in the Eurovision Dance Contest 2007 as Sweden took part in the event representing Sweden with Martin Lidberg as wrestler and Cecilia Ehrling as ballroom dancer. Sean Tully continued as Sean Tully on Coronation Street alongside Antony Cotton's portrayal until full-time participation resumed in 2004. Lauren Gottlieb (Lauren Gottlieb) was part of Sweden's entry in the Eurovision Dance Contest 2007 alongside Martin Lidberg and Cecilia Ehrling as dancers in Paso Doble and Disco Fusion dances. <done/>
+[R] retrieved: Sean Tully; Sweden in the Eurovision Dance Contest; Lauren Gottlieb
+[R] searches 1, recall@9 0.0, judge 0.5, named 1, unsupported 1
+
+=== A150 | Question: The musician who did "Khalaara" was born on what date?
+Gold: Yo Yo Honey Singh; Ishq Garaari
+[L] turn 1: <search>Khalaara musician born on date</search>
+[L] turn 2: The musician who did "Khalaara" is Khachatur of Taron (Khachatur of Taron or Khatchatur Taronetsi) as part of Khachatur of Taron (Armenian: Խաչատուր Տարոնցի , born Taron, western Armenia, date unknown; death date unknown) along with other musicians and poets, alongside Stephen Trask and Ishq Garaari film featuring the song "Khalaara." <done/>
+[L] retrieved: Khachatur of Taron; Stephen Trask; Ishq Garaari
+[L] searches 1, recall@9 0.5, judge 0.5, named 1, unsupported 0
+[R] turn 1: <search>Khalaara musician born on date</search>
+[R] turn 2: The musician who did "Khalaara" is Khachatur of Taron (Khachatur of Taron or Khatchatur Taronetsi) as part of Khachatur of Taron or Khachatur of Taron (Armenian: Խաչատուր Տարոնցի , born Taron, western Armenia, date unknown; death date unknown) along with Ishq Garaari film song Khalaara featuring Yo Yo Honey Singh music composition by Stephen Trask and other musicians. <done/>
+[R] retrieved: Khachatur of Taron; Stephen Trask; Ishq Garaari
+[R] searches 1, recall@9 0.5, judge 1.0, named 2, unsupported 1
+
+=== A40 | Question: Fodder on My Wings is an album by a singer/pianist/songwriter born in which year ?
+Gold: Nina Simone; Fodder on My Wings
+[L] turn 1: <search> Fodder on My Wings album singer/pianist/songwriter born year </search>
+[L] turn 2: Fodder on My Wings is an album by Nina Simone, a singer/pianist/songwriter. She was born on May 21, 1933. Therefore, the album Fodder on My Wings was released in 1978, which is the year mentioned in the album's title. <done/>
+[L] retrieved: Fodder on My Wings; Dara Maclean; Allison Crowe
+[L] searches 1, recall@9 0.5, judge 1.0, named 2, unsupported 1
+[R] turn 1: <search> Fodder on My Wings album singer/pianist/songwriter born year </search>
+[R] turn 2: Fodder on My Wings is an album by Nina Simone, a singer/pianist/songwriter. To determine the year Nina Simone was born, I need to look up her birth information. <search>Nina Simone birth year</search>
+[R] turn 3: Fodder on My Wings is an album by Nina Simone, a singer/pianist/songwriter born on February 21, 1933. Now I need to find the birth year of Nina Simone from the available information. <search> Nina Simone birth year </search>
+[R] retrieved: Fodder on My Wings; Dara Maclean; Allison Crowe; Nina Simone; Matthew Buchanan
+[R] searches 3, recall@9 1.0, judge 1.0, named 2, unsupported 0
+
+=== A40 | Question: Who is the British explorer and holder of several endurance records who partnered with Mike Stroud on polar expiditions?
+Gold: Mike Stroud (physician); Ranulph Fiennes
+[L] turn 1: <search>British explorer with endurance records partnered with Mike Stroud on polar expeditions</search>
+[L] turn 2: The British explorer and endurance record holder who partnered with Mike Stroud on polar expeditions is Ranulph Fiennes. He is known for his extensive involvement in polar exploration, including his collaboration with Mike Stroud. <done/>
+[L] retrieved: Mike Stroud (physician); Rosie Stancer; Roy Koerner
+[L] searches 1, recall@9 0.5, judge 0.5, named 1, unsupported 1
+[R] turn 1: <search>British explorer with endurance records partnered with Mike Stroud on polar expeditions</search>
+[R] turn 2: Mike Stroud, who became widely known for partnering with Ranulph Fiennes on polar expeditions, is a British explorer and holder of several endurance records. <search>British explorer with endurance records partnered with Mike Stroud on polar expeditions</search>
+[R] turn 3: Mike Stroud, a British explorer and holder of several endurance records, partnered with Rosie Stancer on polar expeditions. <done/>
+[R] retrieved: Mike Stroud (physician); Rosie Stancer; Roy Koerner
+[R] searches 2, recall@9 0.5, judge 0.0, named 0, unsupported 0
+
+=== A40 | Question: When was the folk dance style Johannes Brahms' Liebeslieder Waltzes were written for most popular?
+Gold: Ländler; Liebeslieder Walzer, Op. 52 (Brahms)
+[L] turn 1: <search>folk dance style Johannes Brahms' Liebeslieder Waltzes</search>
+[L] turn 2: Johannes Brahms' Liebeslieder Waltzes, including both Op. 52 and Op. 65, are collections of love songs in Ländler style for voices and piano four hands. The lyrics for the "Liebeslieder" come from Georg Friedrich Daumer's "Polydora", a collection of folk songs and love poems. While there is no concrete record indicating the exact inspiration for the Waltzes, there is speculation that Brahms' motivation for the songs was his frustrated love for pianist Clara Schumann, composer Robert Schumann's wife. The most popular folk dance style for Johannes Brahms' Liebeslieder Waltzes is the Ländler, as it is the style of the folk songs that inspired the Waltzes. <done/>
+[L] retrieved: Liebeslieder Walzer, Op. 52 (Brahms); Sixteen Waltzes, Op. 39 (Brahms); Neue Liebeslieder
+[L] searches 1, recall@9 0.5, judge 0.5, named 1, unsupported 1
+[R] turn 1: <search>Johannes Brahms Liebeslieder Waltzes popularity</search>
+[R] turn 2: Johannes Brahms' Liebeslieder Waltzes, including both Op. 52 and Op. 65, were composed for four solo voices and four hands on the piano. The lyrics for the "Liebeslieder" come from Georg Friedrich Daumer's "Polydora", a collection of folk songs and love poems. While there is no concrete record indicating the exact inspiration for the Waltzes, there is speculation that Brahms' motivation for the songs was his frustrated love for pianist Clara Schumann, composer Robert Schumann's wife. The popularity of Johannes Brahms' Liebeslieder Waltzes is not explicitly mentioned in the provided passages, so further research would be needed to determine when the folk dance style was most popular. <done/>
+[R] retrieved: Liebeslieder Walzer, Op. 52 (Brahms); Sixteen Waltzes, Op. 39 (Brahms); Neue Liebeslieder
+[R] searches 1, recall@9 0.5, judge 0.0, named 0, unsupported 0
+
+=== A40 | Question: What is the name of the statue whose replica have been created in many landmarks world-wide such as near Pont de Grenelle in Paris?
+Gold: Replicas of the Statue of Liberty; Pont de Grenelle
+[L] turn 1: <search>statue replica world-wide landmarks</search>
+[L] turn 2: The Statue of Liberty has numerous replicas worldwide, including the one in Lincoln Park, Chicago, which is a famous landmark. The statue whose replica has been created in many landmarks, including near Pont de Grenelle in Paris, is the Statue of Liberty. <done/>
+[L] retrieved: Replicas of the Statue of Liberty; Abraham Lincoln: The Man; Viking ship replica
+[L] searches 1, recall@9 0.5, judge 0.5, named 1, unsupported 1
+[R] turn 1: <search>statue replica world-wide landmarks</search>
+[R] turn 2: The Statue of Liberty has numerous replicas worldwide, including the one in Lincoln Park in Chicago. The Abraham Lincoln: The Man statue, also known as Abraham Lincoln: The Man (Abraham Lincoln II), is another notable replica located in Lincoln Park, Chicago. The Viking ship replica, "Viking", was built by the Rødsverven shipyard in Sandefjord, Norway, and sailed across the Atlantic Ocean to Chicago for the World's Columbian Exposition in 1893. These are just a few examples of the many landmarks around the world featuring replicas of these iconic statues or historical figures. <done/>
+[R] retrieved: Replicas of the Statue of Liberty; Abraham Lincoln: The Man; Viking ship replica
+[R] searches 1, recall@9 0.5, judge 0.0, named 0, unsupported 0
+
+=== A40 | Question: The musician who did "Khalaara" was born on what date?
+Gold: Yo Yo Honey Singh; Ishq Garaari
+[L] turn 1: <search>Khalaara musician born date</search>
+[L] turn 2: The song "Khalaara" is from the Punjabi film "Ishq Garaari" directed by Dheeraj Rattan. The musician who performed "Khalaara" in this film is Yo Yo Honey Singh. Now I need to find out when Yo Yo Honey Singh was born. <search>Yo Yo Honey Singh born date</search>
+[L] turn 3: The song "Khalaara" was performed by Yo Yo Honey Singh in the Punjabi film "Ishq Garaari". Yo Yo Honey Singh was born on 15 March 1983. Now I need to find out when the musician who performed "Khalaara" was born. <search>Khalaara performer born date</search>
+[L] retrieved: Khachatur of Taron; Stephen Trask; Ishq Garaari; Yo Yo Honey Singh; Badshah (rapper); Roger Davies (manager); Zemfira
+[L] searches 3, recall@9 1.0, judge 1.0, named 2, unsupported 0
+[R] turn 1: <search>Khalaara musician born date</search>
+[R] turn 2: The song "Khalaara" is mentioned in the third result, but it is not associated with a musician. The first result mentions Khachatur of Taron, who is a poet and musician, but does not provide his birth date. The second result is about Stephen Trask, an American musician and composer, but does not mention his birth date either. Therefore, I need to find the birth date of the musician who performed "Khalaara". <search>Khalaara song performer birth date</search>
+[R] turn 3: The song "Khalaara" is performed by Yo Yo Honey Singh, and Yo Yo Honey Singh was born on November 25, 1833. Therefore, the musician who performed "Khalaara" was born on November 25, 1833. <done/>
+[R] retrieved: Khachatur of Taron; Stephen Trask; Ishq Garaari; Thomas D. Singleton; Clara Morris
+[R] searches 2, recall@9 0.5, judge 0.5, named 1, unsupported 1
+
+=== A40 | Question: "Lesbian Request Denied" is the third episode of the first season of a series created by who?
+Gold: Lesbian Request Denied; Orange Is the New Black
+[L] turn 1: <search>Lesbian Request Denied season premiere</search>
+[L] turn 2: "Lesbian Request Denied" is the third episode of the first season of the American comedy-drama series "Orange Is the New Black" ("OITNB"), created by Sian Heder. Now I need to find out who created "Orange Is the New Black". <search>Orange Is the New Black creator</search>
+[L] turn 3: "Lesbian Request Denied" is the third episode of the first season of the American comedy-drama series "Orange Is the New Black" ("OITNB"), created by Sian Heder. "Orange Is the New Black" is created by Jenji Kohan for Netflix. Now I need to find out who created "The Handmaid's Tale". <search>The Handmaid's Tale creator</search>
+[L] retrieved: Lesbian Request Denied; Lesbian and Gay Inter-University Organization; On Our Backs; Orange Is the New Black; List of The Annoying Orange episodes; Samira Wiley; The Handmaid's Tale (film); Modern Tales
+[L] searches 3, recall@9 1.0, judge 1.0, named 2, unsupported 0
+[R] turn 1: <search>Lesbian Request Denied season premiere creator</search>
+[R] turn 2: "Lesbian Request Denied" is the third episode of the first season of the American comedy-drama series "Orange Is the New Black", created by Sian Heder. The series is based on Piper Kerman's memoir "Orange is the New Black" (2010). The episode was written by Sian Heder and directed by Jodie Foster, who is also an award-winning actress and director. <done/>
+[R] retrieved: Lesbian Request Denied; The Ghost of Harrenhal; Manhunt (Prison Break)
+[R] searches 1, recall@9 0.5, judge 1.0, named 2, unsupported 1
+

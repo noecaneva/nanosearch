@@ -1,0 +1,45 @@
+eval: kind n_turns n_with_reasoning share mean_chars
+  prompted  search  416   67 0.161   13.9
+  prompted  stop    118   73 0.619   38.1
+  prompted  all     545  151  (incl. malformed turns)
+  run1      search  200    0 0.000    0.0
+  run1      stop    200  200 1.000   49.4
+  run1      all     400  200  (incl. malformed turns)
+  run2      search  594    0 0.000    0.0
+  run2      stop      6    0 0.000    0.0
+  run2      all     600    0  (incl. malformed turns)
+train, 25-step buckets: share with reasoning (n turns), mean chars
+  run1 search 0.18 (246)  16.2 | 0.03 (206)   2.3 | 0.00 (200)   0.0 | 0.00 (199)   0.0 | 0.00 (200)   0.0 | 0.00 (200)   0.0
+  run1 stop   0.98 (183)  80.7 | 1.00 (199)  80.8 | 1.00 (200)  51.8 | 1.00 (199)  46.6 | 1.00 (200)  45.5 | 1.00 (200)  50.4
+  run2 search 0.03 (564)   2.2 | 0.00 (599)   0.0 | 0.00 (599)   0.1 | 0.00 (596)   0.0 | 0.00 (600)   0.0 | 0.00 (591)   0.0
+  run2 stop   0.28 (25)  24.0 |   -   |   -   | 0.00 (4)   0.0 |   -   | 0.00 (9)   0.0
+search turns with reasoning, by search position:
+  eval prompted  #1: 0/200 #2: 48/145 #3: 19/71
+  eval run1      #1: 0/200
+  eval run2      #1: 0/200 #2: 0/200 #3: 0/194
+  train run1 steps 0-10: #1: 0/79 #2: 19/21 #3: 11/12
+  train run1 steps 10-40: #1: 1/240 #2: 17/17 #3: 3/3
+  train run1 steps 40-150: #1: 0/879
+  train run2 steps 0-10: #1: 2/80 #2: 8/73 #3: 5/52
+  train run2 steps 10-40: #1: 0/240 #2: 0/240 #3: 0/238
+  train run2 steps 40-150: #1: 0/880 #2: 0/880 #3: 1/866
+
+run1 early (step < 10), 3 random turns:
+  step   6 done   "The end of Michel Sarrazin's immigration was 1763, ending with cession to Great Britain and Spain. <done/>"
+  step   4 done   'The film starred an actor, director, and musician who have a star on the Hollywood Walk of Fame. <done/>'
+  step   8 done   'I am not looking for a time-sensitivity between the rock band members and tax experts. I am seeking the name of the tax attorney. <done/>'
+
+run1 late (step > 140), 3 random turns:
+  step 141 search '<search>Capital of the Netherlands and Amsterdam culture common</search>'
+  step 141 search '<search>Capital of the Netherlands and Amsterdam culture common</search>'
+  step 141 done   "Now I have the novel's author and the university's founding year. <done/>"
+
+run2 early (step < 10), 3 random turns:
+  step   6 search '<search>The plot of "From Here to Eternity"</search>'
+  step   5 search '<search>Lucia Aniello work on comedy TV series that stars Glazer and Abbi Jacobson</search>'
+  step   9 search '<search>Marching Through Georgia</search>'
+
+run2 late (step > 140), 3 random turns:
+  step 147 search '<search>Norwegian Lundehund dog</search>'
+  step 145 search '<search>Decibel measurement unit</search>'
+  step 146 search '<search>The Loop (film)</search>'

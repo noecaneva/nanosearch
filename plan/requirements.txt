@@ -1,0 +1,33 @@
+# Pinned 2026-10-19 on es0 (RTX 2080 Ti, sm_75), Python 3.12.13.
+#
+# Environment = Lawrencium module `ai/vllm/0.19.0` (provides torch, vllm, transformers, ray)
+# plus a venv on $SCRATCH created with --system-site-packages for the rest:
+#   module load ai/vllm/0.19.0
+#   python -m venv --system-site-packages $SCRATCH/grpop/envs/grpop
+#   $SCRATCH/grpop/envs/grpop/bin/pip install -r requirements.txt
+# Always `source ~/grpop/env.sh` first so every cache lands on $SCRATCH.
+#
+# vLLM on sm_75 needs: --dtype float16 --attention-backend TRITON_ATTN --generation-config vllm
+# (the module's compiled _C kernels have no sm_75 image; see LOG in 10-handoff-2026-10-19.md).
+
+# Core (torch, vllm come from the module; listed for the record)
+torch==2.10.0
+vllm==0.19.0
+transformers==4.57.6
+huggingface_hub==0.36.2
+accelerate==1.15.0
+peft==0.21.2
+datasets==4.3.0
+
+# Retrieval
+bm25s==0.3.14
+PyStemmer==3.1.0
+sentence-transformers==5.1.2
+faiss-cpu==1.15.1
+
+# Tracking and utilities
+wandb==0.31.0
+numpy==2.2.6
+pandas==3.0.2
+tqdm==4.67.3
+requests==2.33.1

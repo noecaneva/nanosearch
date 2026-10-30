@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.claude/
+# Data, indexes, outputs, envs and caches live on $SCRATCH/grpop, never in this repo.
+data*/
+indexes*/
+outputs/
+logs/
+wandb/
+*.jsonl
+*.safetensors
