@@ -20,7 +20,7 @@ import requests
 
 from nanosearch import DATA_DIR, OUT_DIR
 from nanosearch.baselines import K, load_questions, ndcg, recall
-from nanosearch.env import STOP, W_STEP, SearchEnv, reward
+from nanosearch.env import CORE, HARNESSES, STOP, W_STEP, SearchEnv, reward
 from nanosearch.indexes import get_retriever
 
 MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
@@ -29,14 +29,15 @@ MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
 class VLLMClient:
     """generate(prompt_ids, max_tokens) -> token ids, round-robin over one or more servers."""
 
-    def __init__(self, urls, model, temperature=0.0, seed=0):
+    def __init__(self, urls, model, temperature=0.0, seed=0, stop=STOP):
         self.urls = itertools.cycle(urls)
         self.model, self.temperature, self.seed = model, temperature, seed
+        self.stop = stop
         self.session = requests.Session()
 
     def __call__(self, prompt_ids, max_tokens):
         req = {"model": self.model, "prompt": prompt_ids, "max_tokens": max_tokens,
-               "temperature": self.temperature, "stop": STOP,
+               "temperature": self.temperature, "stop": self.stop,
                "include_stop_str_in_output": True, "return_token_ids": True,
                "skip_special_tokens": False}
         if self.seed is not None:  # None when sampling groups: a fixed seed makes all G identical
@@ -73,7 +74,12 @@ def main():
     ap.add_argument("--no_reminder", action="store_true", help="drop the reminder after results")
     ap.add_argument("--system_note", default="",
                     help="sentence appended to the system prompt (default none: core-v1)")
+    ap.add_argument("--harness", default="core", choices=sorted(HARNESSES),
+                    help="Exp 06: W = reworded prompt, T = W + renamed tokens + separate layout")
     args = ap.parse_args()
+    harness = HARNESSES[args.harness]
+    if args.harness == "T":
+        args.separate_results = True
     out_dir = os.path.join(OUT_DIR, args.out_name)
     os.makedirs(out_dir, exist_ok=True)
 
@@ -85,14 +91,17 @@ def main():
     from transformers import AutoTokenizer
     env = SearchEnv(AutoTokenizer.from_pretrained(MODEL), get_retriever("bm25"),
                     separate_results=args.separate_results, reminder=not args.no_reminder,
-                    system_note=args.system_note)
-    generate = VLLMClient(args.urls, args.lora or MODEL)
+                    system_note=args.system_note, harness=harness)
+    generate = VLLMClient(args.urls, args.lora or MODEL, stop=harness.stop)
+    # Exp 06: turns that use a core-v1 action token which is not an action in this harness
+    old_tokens = {CORE.search_open, CORE.done} - {harness.search_open, harness.done}
     questions = load_questions(os.path.join(DATA_DIR, f"{args.split}.jsonl"))[:args.limit]
 
     def play(q):
         t0 = time.perf_counter()
         ep = env.run(q["question"], generate)
         ep["latency"] = time.perf_counter() - t0
+        ep["old_token_turns"] = sum(any(t in turn["text"] for t in old_tokens) for turn in ep["turns"])
         return ep
 
     t0 = time.time()
@@ -107,7 +116,7 @@ def main():
                      "gold_doc_ids": q["gold_doc_ids"], **score(q, ep),
                      **{k: ep[k] for k in ("retrieved", "queries", "turns", "end",
                                            "format_valid", "n_searches", "n_generated",
-                                           "latency")}})
+                                           "old_token_turns", "latency")}})
 
     def agg(rs):
         return {m: round(float(np.mean([r[m] for r in rs])), 4)
@@ -120,8 +129,9 @@ def main():
     summary = {
         "system": args.out_name, "model": MODEL, "lora": args.lora_path or args.lora, "k": K,
         "separate_results": args.separate_results, "reminder": not args.no_reminder,
-        "system_note": args.system_note,
+        "system_note": args.system_note, "harness": args.harness,
         "n_questions": len(rows), **agg(rows),
+        "old_token_turns": int(sum(r["old_token_turns"] for r in rows)),
         "by_type": {t: {"n": sum(r["type"] == t for r in rows),
                         **agg([r for r in rows if r["type"] == t])}
                     for t in sorted({r["type"] for r in rows})},

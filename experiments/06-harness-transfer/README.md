@@ -1,8 +1,14 @@
 # Experiment 06: did run2 learn to search, or learn the harness?
 
-**Status: planned 2026-11-06, not run.** Eval only, no training. The hypothesis and the rules that
-decide it are written here before any job is submitted; the Results section is filled in afterwards
-and the rules are not changed once the numbers are in.
+**Status: run 2026-11-06 (job 27579564, es_debug, 1 GPU, 11 min).** Eval only, no training. The
+hypothesis and the rules that decide it were written before the job was submitted; the Results
+section was filled in afterwards and the rules were not changed.
+
+**Verdict: H1 survives, narrowly, by the survival rule.** In both unseen harnesses recall@9 stays
+above dense single-shot (W 0.900, T 0.880 vs 0.853) and the paired Δ CI contains a value ≥ −0.03
+(W −0.015 [−0.037, +0.010], T −0.035 [−0.062, −0.010]). The T drop is real (its CI excludes zero)
+and its point estimate sits just past the margin, so the claim that survives is "mostly search, with
+a harness tax of about 0.035 to 0.05 recall@9 that is present at every checkpoint".
 
 **Question.** Run2 (Exp 01, `run2_wstep0/adapters/step0150`) reaches recall@9 0.915 against 0.620 for
 the prompted model and 0.853 for dense single-shot. All of that was measured in the harness it was
@@ -138,9 +144,84 @@ PYTHONPATH=. python experiments/06-harness-transfer/analyze.py      # es0 node -
 
 ## Results
 
-Not yet run. Fill in: the eight-row table, Part A Δs with CIs against the rules above, the Part B
-trajectory, the control's core → T move, three verbatim T episodes. State the verdict on H1 in one
-sentence at the top of this file, with the rule it was decided by.
+Job 27579564 (2026-11-06, es0/es_debug, 1 GPU, 10:53 wall; prompt check PASS). Numbers from
+`out/eval.json` (`analyze.py`, srun on es0). 200 eval questions, greedy, BM25. Core rows for step
+150 and the prompted model are the existing evals (`agent_grpo_run2`, `agent_prompted`).
+
+| adapter | harness | recall@9 | all_gold@9 | nDCG@9 | searches | format | ends done / max / malf. | tokens | old-token turns |
+|---|---|---|---|---|---|---|---|---|---|
+| step0150 | core | 0.915 | 0.850 | 0.759 | 2.97 | 1.000 | 6 / 194 / 0 | 40.2 | – |
+| step0150 | core rerun | 0.917 | 0.855 | 0.760 | 2.97 | 1.000 | 7 / 193 / 0 | 40.1 | – |
+| step0150 | W | 0.900 | 0.815 | 0.748 | 2.87 | 1.000 | 26 / 174 / 0 | 40.4 | 0 |
+| step0150 | T | 0.880 | 0.790 | 0.743 | 2.87 | 0.985 | 21 / 176 / 3 | 48.1 | 0 |
+| step0050 | core | 0.873 | 0.775 | 0.730 | 3.00 | 1.000 | 0 / 200 / 0 | 40.8 | – |
+| step0050 | T | 0.823 | 0.705 | 0.721 | 2.90 | 0.995 | 16 / 183 / 1 | 45.5 | 0 |
+| step0010 | core | 0.777 | 0.595 | 0.709 | 3.00 | 1.000 | 0 / 200 / 0 | 42.5 | – |
+| step0010 | T | 0.728 | 0.550 | 0.679 | 2.98 | 0.995 | 2 / 197 / 1 | 49.3 | 0 |
+| prompted | core | 0.620 | 0.330 | 0.624 | 2.08 | 0.945 | 118 / 71 / 11 | 42.0 | – |
+| prompted | T | 0.565 | 0.360 | 0.540 | 2.32 | 0.995 | 71 / 128 / 1 | 59.3 | 0 |
+
+**Noise floor.** Same-job greedy rerun of step0150 in core vs the stored eval: 197/200 episodes
+identical, recall@9 Δ +0.003 [0.000, +0.007]. Every Δ below is far outside this.
+
+**Part A (step 150), paired Δ harness − core, 10k bootstrap, 95% CI.**
+
+| harness | recall@9 | all_gold@9 | searches | format | rule |
+|---|---|---|---|---|---|
+| W | −0.015 [−0.037, +0.010] | −0.035 [−0.080, +0.010] | −0.10 [−0.15, −0.06] | 0 | survives (0.900 ≥ 0.853, CI reaches −0.03) |
+| T | −0.035 [−0.062, −0.010] | −0.060 [−0.105, −0.015] | −0.11 [−0.16, −0.06] | −0.015 [−0.035, 0] | survives (0.880 ≥ 0.853, CI upper −0.010 ≥ −0.03) |
+
+Neither harness is confounded (format 1.000 and 0.985). The W wording makes the model stop earlier
+(26 `<done/>` endings instead of 6; its prompt says "ends the search, once every passage the reader
+needs is in hand"), which costs all_gold more than recall. T adds a real recall drop on top.
+
+**Part B, gap core − T in recall@9 per checkpoint.**
+
+| checkpoint | core | T | gap [CI] |
+|---|---|---|---|
+| step0010 | 0.777 | 0.728 | +0.050 [+0.013, +0.090] |
+| step0050 | 0.873 | 0.823 | +0.050 [+0.015, +0.085] |
+| step0150 | 0.915 | 0.880 | +0.035 [+0.010, +0.062] |
+
+Gap(150) − gap(50) = −0.015 [−0.058, +0.028]: the "transfers at every stage" reading is **not
+rejected** (it would need +0.03). The gap is also not large early and closed late, so the "format
+first, search later" reading has no support either. What the data show is a roughly constant
+harness tax of 0.035 to 0.05 recall@9 while the in-harness score rises from 0.777 to 0.915: nearly
+all of the improvement from training transfers into T.
+
+**Control.** The untrained prompted model moves under T by −0.055 [−0.105, −0.003] recall@9, with
+format 0.945 → 0.995 (the separate layout, as in Exp 02), searches +0.24 and +17 generated tokens
+per episode. The trained adapter's drop under T (−0.035) is smaller than the control's, so T is
+not an easier harness that the adapter fails to exploit; it is a harder one for both.
+
+**Old tokens.** `old_token_turns` = 0 in all 800 T episodes (about 2,300 turns): no adapter ever
+wrote `<search>` or `<done/>` in harness T. The trained format is not sticky at the token level;
+the model reads the tokens off the prompt. The 3 malformed step0150 episodes in T are
+answer-instead-of-act failures (after the second result the model writes e.g. `[1] 1919`), the
+same failure the prompted model shows in core.
+
+**Three verbatim T episodes of step0150** (`out/examples.txt`; 158 clean successes, 17 misses that
+core got, 0 old-token episodes, so the third slot is empty):
+
+- Success. *Which Italian-American composer and librettist wrote the English language opera, Maria
+  Golovin?* `<query>Maria Golovin opera</query>` → `<query>Gian Carlo Menotti Italian-American
+  composer</query>` → `<query>Librettist Gian Carlo Menotti English language opera</query>`,
+  recall@9 1.0. Core: the same first query, then `Gian Carlo Menotti composer and librettist`,
+  `Italian-American composer and librettist`, recall@9 1.0.
+- Miss in T, hit in core. *Near which town did the family of author of the "Adventures of
+  Huckleberry Finn" own several tracts of land?* T: `Author of "Adventures of Huckleberry Finn"` →
+  `Owner of several tracts of land near Tom Sawyer and Huckleberry Finn` → `Tom Sawyer and
+  Huckleberry Finn owned several tracts of land in a town near them`, recall@9 0.0 (never names
+  Twain). Core: `Adventures of Huckleberry Finn novel author` → `Family of Mark Twain author owning
+  land` → `Monroe County, Missouri`, recall@9 1.0. In T the queries drift towards question-like
+  sentences (mean query length 5.6 words vs 5.0 in core) and reuse words from the results instead of
+  the entity they imply.
+- Old-token turn: none.
+
+**Reading.** Run2 learned search, with a measurable harness component. About 0.035 recall@9 of its
+0.915 depends on the exact prompt, tokens and layout it was trained in; the remaining gain over the
+prompted model (0.880 vs 0.620 in core, 0.565 in T) transfers to a harness it never saw, and does so
+from step 10 onwards. The one-seed, same-author caveats below stand.
 
 ## Limitations (to keep whatever the result)
 

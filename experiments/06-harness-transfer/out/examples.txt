@@ -1,0 +1,33 @@
+step0150 in harness T: 158 clean successes, 17 misses that core got, 0 episodes with an old-token turn
+
+=== success (recall@9 1.0)
+Question: Which Italian-American composer and librettist wrote the English language opera, Maria Golovin?
+Gold: Gian Carlo Menotti; Maria Golovin
+[T] turn 1 (search): <query>Maria Golovin opera</query>
+[T] turn 2 (search): <query>Gian Carlo Menotti Italian-American composer</query>
+[T] turn 3 (search): <query>Librettist Gian Carlo Menotti English language opera</query>
+[T] retrieved: Maria Golovin; Callas Forever; Griselda (A. Scarlatti); Gian Carlo Menotti; The Old Maid and the Thief; Amelia Goes to the Ball
+[T] end max_searches, searches 3, recall@9 1.0
+[core] turn 1 (search): <search>Maria Golovin opera</search>
+[core] turn 2 (search): <search>Gian Carlo Menotti composer and librettist</search>
+[core] turn 3 (search): <search>Italian-American composer and librettist</search>
+
+[core] end max_searches, searches 3, recall@9 1.0
+
+=== miss in T, hit in core
+Question: Near which town did the family of author of the "Adventures of Huckleberry Finn" own several tracts of land?
+Gold: Santa Fe, Missouri; Mark Twain
+[T] turn 1 (search): <query>Author of "Adventures of Huckleberry Finn"</query>
+[T] turn 2 (search): <query>Owner of several tracts of land near Tom Sawyer and Huckleberry Finn</query>
+[T] turn 3 (search): <query>Tom Sawyer and Huckleberry Finn owned several tracts of land in a town near them</query>
+[T] retrieved: Huckleberry Finn and His Friends; Huckleberry no Bōken; Tom Sawyer &amp; Huckleberry Finn; Tom Sawyer, Detective
+[T] end max_searches, searches 3, recall@9 0.0
+[core] turn 1 (search): <search>Adventures of Huckleberry Finn novel author</search>
+[core] turn 2 (search): <search>Family of Mark Twain author owning land</search>
+[core] turn 3 (search): <search>Monroe County, Missouri</search>
+
+[core] end max_searches, searches 3, recall@9 1.0
+
+=== old-token turn
+(none)
+

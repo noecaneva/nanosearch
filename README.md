@@ -62,6 +62,12 @@ Full write-up with training curves, three verbatim episodes and the reward-hacki
 - **04 – a grader that reads only the final message** (`experiments/04-summary-judge/`): with a
   rule-based "summary judge" alone, GRPO games it (judge 0.85, recall 0.645, one search); half
   recall + half judge does not (recall 0.873).
+- **05 – telling the policy about its grader** (`experiments/05-stated-grader/`): the trained
+  policy ignores a stated grader; the untrained control moves the wrong way (negative result).
+- **06 – harness transfer** (`experiments/06-harness-transfer/`): run2 in a reworded prompt (W) and
+  with renamed tokens plus a new layout (T) keeps recall@9 0.900 / 0.880 vs 0.915 at home, above
+  dense single-shot; the gap to core is about 0.04 at every checkpoint. Learned search, with a
+  small harness tax.
 - Engineering: trainer on 2 GPUs (`NTRAIN=2`), checked equal to the 1-GPU update, 14-25% faster per
   step early in training. Details at the end of [RESULTS.md](RESULTS.md).
 - Next: 0.5B vs 1.5B; a `<select>` action so the model cannot win by searching everything;

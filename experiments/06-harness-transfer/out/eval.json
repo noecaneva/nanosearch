@@ -1,0 +1,462 @@
+{
+  "eval": {
+    "step0150 core": {
+      "recall@9": 0.915,
+      "all_gold@9": 0.85,
+      "ndcg@9": 0.759,
+      "recall@3": 0.49,
+      "n_searches": 2.97,
+      "format_valid": 1.0,
+      "n_generated": 40.155,
+      "ends": {
+        "done": 6,
+        "max_searches": 194
+      },
+      "malformed_reasons": {},
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 4.97
+    },
+    "step0150 core rerun": {
+      "recall@9": 0.917,
+      "all_gold@9": 0.855,
+      "ndcg@9": 0.76,
+      "recall@3": 0.49,
+      "n_searches": 2.965,
+      "format_valid": 1.0,
+      "n_generated": 40.11,
+      "ends": {
+        "done": 7,
+        "max_searches": 193
+      },
+      "malformed_reasons": {},
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 4.96
+    },
+    "step0150 W": {
+      "recall@9": 0.9,
+      "all_gold@9": 0.815,
+      "ndcg@9": 0.748,
+      "recall@3": 0.49,
+      "n_searches": 2.87,
+      "format_valid": 1.0,
+      "n_generated": 40.41,
+      "ends": {
+        "done": 26,
+        "max_searches": 174
+      },
+      "malformed_reasons": {},
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 5.04
+    },
+    "step0150 T": {
+      "recall@9": 0.88,
+      "all_gold@9": 0.79,
+      "ndcg@9": 0.743,
+      "recall@3": 0.492,
+      "n_searches": 2.865,
+      "format_valid": 0.985,
+      "n_generated": 48.08,
+      "ends": {
+        "done": 21,
+        "malformed": 3,
+        "max_searches": 176
+      },
+      "malformed_reasons": {
+        "malformed:no_action": 3
+      },
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 5.59
+    },
+    "step0010 core": {
+      "recall@9": 0.777,
+      "all_gold@9": 0.595,
+      "ndcg@9": 0.709,
+      "recall@3": 0.527,
+      "n_searches": 3.0,
+      "format_valid": 1.0,
+      "n_generated": 42.535,
+      "ends": {
+        "max_searches": 200
+      },
+      "malformed_reasons": {},
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 5.7
+    },
+    "step0010 T": {
+      "recall@9": 0.728,
+      "all_gold@9": 0.55,
+      "ndcg@9": 0.679,
+      "recall@3": 0.542,
+      "n_searches": 2.975,
+      "format_valid": 0.995,
+      "n_generated": 49.28,
+      "ends": {
+        "done": 2,
+        "malformed": 1,
+        "max_searches": 197
+      },
+      "malformed_reasons": {
+        "malformed:no_action": 1
+      },
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 6.33
+    },
+    "step0050 core": {
+      "recall@9": 0.873,
+      "all_gold@9": 0.775,
+      "ndcg@9": 0.73,
+      "recall@3": 0.472,
+      "n_searches": 3.0,
+      "format_valid": 1.0,
+      "n_generated": 40.765,
+      "ends": {
+        "max_searches": 200
+      },
+      "malformed_reasons": {},
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 5.14
+    },
+    "step0050 T": {
+      "recall@9": 0.823,
+      "all_gold@9": 0.705,
+      "ndcg@9": 0.721,
+      "recall@3": 0.532,
+      "n_searches": 2.895,
+      "format_valid": 0.995,
+      "n_generated": 45.535,
+      "ends": {
+        "done": 16,
+        "malformed": 1,
+        "max_searches": 183
+      },
+      "malformed_reasons": {
+        "malformed:no_action": 1
+      },
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 5.89
+    },
+    "prompted core": {
+      "recall@9": 0.62,
+      "all_gold@9": 0.33,
+      "ndcg@9": 0.624,
+      "recall@3": 0.525,
+      "n_searches": 2.08,
+      "format_valid": 0.945,
+      "n_generated": 41.95,
+      "ends": {
+        "done": 118,
+        "malformed": 11,
+        "max_searches": 71
+      },
+      "malformed_reasons": {
+        "malformed:no_action": 11
+      },
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 4.16
+    },
+    "prompted T": {
+      "recall@9": 0.565,
+      "all_gold@9": 0.36,
+      "ndcg@9": 0.54,
+      "recall@3": 0.453,
+      "n_searches": 2.315,
+      "format_valid": 0.995,
+      "n_generated": 59.32,
+      "ends": {
+        "done": 71,
+        "malformed": 1,
+        "max_searches": 128
+      },
+      "malformed_reasons": {
+        "malformed:no_action": 1
+      },
+      "old_token_turns": 0,
+      "episodes_with_old_token": 0,
+      "mean_query_words": 5.48
+    }
+  },
+  "paired": {
+    "step0150 W-core": {
+      "recall@9": [
+        -0.015,
+        -0.037,
+        0.01
+      ],
+      "all_gold@9": [
+        -0.035,
+        -0.08,
+        0.01
+      ],
+      "ndcg@9": [
+        -0.011,
+        -0.028,
+        0.006
+      ],
+      "recall@3": [
+        0.0,
+        -0.02,
+        0.02
+      ],
+      "n_searches": [
+        -0.1,
+        -0.145,
+        -0.06
+      ],
+      "format_valid": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "n_generated": [
+        0.255,
+        -0.855,
+        1.385
+      ]
+    },
+    "step0150 T-core": {
+      "recall@9": [
+        -0.035,
+        -0.062,
+        -0.01
+      ],
+      "all_gold@9": [
+        -0.06,
+        -0.105,
+        -0.015
+      ],
+      "ndcg@9": [
+        -0.017,
+        -0.036,
+        0.002
+      ],
+      "recall@3": [
+        0.003,
+        -0.02,
+        0.025
+      ],
+      "n_searches": [
+        -0.105,
+        -0.155,
+        -0.055
+      ],
+      "format_valid": [
+        -0.015,
+        -0.035,
+        0.0
+      ],
+      "n_generated": [
+        7.925,
+        5.61,
+        10.4
+      ]
+    },
+    "step0010 T-core": {
+      "recall@9": [
+        -0.05,
+        -0.09,
+        -0.013
+      ],
+      "all_gold@9": [
+        -0.045,
+        -0.11,
+        0.015
+      ],
+      "ndcg@9": [
+        -0.03,
+        -0.06,
+        -0.002
+      ],
+      "recall@3": [
+        0.015,
+        -0.02,
+        0.05
+      ],
+      "n_searches": [
+        -0.025,
+        -0.065,
+        0.0
+      ],
+      "format_valid": [
+        -0.005,
+        -0.015,
+        0.0
+      ],
+      "n_generated": [
+        6.745,
+        3.775,
+        10.14
+      ]
+    },
+    "step0050 T-core": {
+      "recall@9": [
+        -0.05,
+        -0.085,
+        -0.015
+      ],
+      "all_gold@9": [
+        -0.07,
+        -0.13,
+        -0.01
+      ],
+      "ndcg@9": [
+        -0.008,
+        -0.037,
+        0.019
+      ],
+      "recall@3": [
+        0.06,
+        0.028,
+        0.092
+      ],
+      "n_searches": [
+        -0.105,
+        -0.16,
+        -0.055
+      ],
+      "format_valid": [
+        -0.005,
+        -0.015,
+        0.0
+      ],
+      "n_generated": [
+        4.77,
+        2.81,
+        6.955
+      ]
+    },
+    "prompted T-core": {
+      "recall@9": [
+        -0.055,
+        -0.105,
+        -0.003
+      ],
+      "all_gold@9": [
+        0.03,
+        -0.045,
+        0.105
+      ],
+      "ndcg@9": [
+        -0.084,
+        -0.129,
+        -0.038
+      ],
+      "recall@3": [
+        -0.072,
+        -0.115,
+        -0.03
+      ],
+      "n_searches": [
+        0.235,
+        0.08,
+        0.395
+      ],
+      "format_valid": [
+        0.05,
+        0.02,
+        0.085
+      ],
+      "n_generated": [
+        17.37,
+        12.32,
+        22.615
+      ]
+    }
+  },
+  "noise_floor_step0150_rerun-core": {
+    "recall@9": [
+      0.003,
+      0.0,
+      0.007
+    ],
+    "all_gold@9": [
+      0.005,
+      0.0,
+      0.015
+    ],
+    "ndcg@9": [
+      0.001,
+      0.0,
+      0.003
+    ],
+    "recall@3": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "n_searches": [
+      -0.005,
+      -0.015,
+      0.0
+    ],
+    "format_valid": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "n_generated": [
+      -0.045,
+      -0.125,
+      0.01
+    ],
+    "episodes_identical": 197
+  },
+  "trajectory_gap_core_minus_T_recall@9": {
+    "step0010": [
+      0.05,
+      0.013,
+      0.09
+    ],
+    "step0050": [
+      0.05,
+      0.015,
+      0.085
+    ],
+    "step0150": [
+      0.035,
+      0.01,
+      0.062
+    ],
+    "step0150 - step0050": [
+      -0.015,
+      -0.058,
+      0.028
+    ]
+  },
+  "verdict": {
+    "W": {
+      "recall@9": 0.9,
+      "format_valid": 1.0,
+      "delta": [
+        -0.015,
+        -0.037,
+        0.01
+      ],
+      "confounded_format_below_0.90": false,
+      "falsified": false,
+      "survives": true
+    },
+    "T": {
+      "recall@9": 0.88,
+      "format_valid": 0.985,
+      "delta": [
+        -0.035,
+        -0.062,
+        -0.01
+      ],
+      "confounded_format_below_0.90": false,
+      "falsified": false,
+      "survives": true
+    },
+    "H1": "survives",
+    "partB_transfer_at_every_stage_rejected": false
+  }
+}

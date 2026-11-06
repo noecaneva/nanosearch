@@ -101,6 +101,26 @@ in the wrong direction: R makes it name more titles and answer more often (malfo
 validated oversight cue. No positive control for prompt sensitivity, one seed. Details:
 `experiments/05-stated-grader/README.md`.
 
+## Exp 06: did run2 learn to search, or learn the harness? (eval only, 200 eval questions, greedy)
+
+Run2 adapters evaluated in two harnesses they never saw: W = reworded system prompt, same tokens; T = W plus
+renamed action tokens (`<query>…</query>` / `<stop/>`) and the separate result layout. Pre-registered rules in
+`experiments/06-harness-transfer/README.md`. Paired Δ = harness − core, 10k bootstrap, 95% CI.
+
+| adapter | core | W | T | Δ W | Δ T |
+|---|---|---|---|---|---|
+| step0010 | 0.777 | – | 0.728 | – | −0.050 [−0.090, −0.013] |
+| step0050 | 0.873 | – | 0.823 | – | −0.050 [−0.085, −0.015] |
+| step0150 | 0.915 | 0.900 | 0.880 | −0.015 [−0.037, +0.010] | −0.035 [−0.062, −0.010] |
+| prompted (control) | 0.620 | – | 0.565 | – | −0.055 [−0.105, −0.003] |
+
+**H1 (learned search) survives, narrowly.** recall@9 stays above dense single-shot (0.853) in both harnesses
+and both CIs reach −0.03; the T drop is real but smaller than the untrained control's. The core − T gap is
+0.05, 0.05, 0.035 at steps 10, 50, 150 (change 150 vs 50: −0.015 [−0.058, +0.028]), so the gain from training
+transfers at every stage; a constant harness tax of about 0.04 remains. Format stays ≥ 0.985 in every harness
+and no adapter ever wrote an old token in T (0 of ~2,300 turns). Same-job rerun noise: 197/200 identical
+episodes, Δ +0.003. One seed, one model, same-author harnesses.
+
 ## Engineering: trainer on 2 GPUs (no result change)
 
 `NTRAIN=2` in `experiments/01-hotpotqa-grpo/run.sh` runs 2 vLLM servers + 2 trainer GPUs (torch.distributed)
