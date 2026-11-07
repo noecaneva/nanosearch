@@ -1,7 +1,15 @@
 # Experiment 07: the run2 recipe on Qwen3-1.7B, does it teach search or only the harness?
 
-**Status: planned 2026-11-06, not run.** Runs after Exp 06 (it reuses Exp 06's harness T). The rules
-below are fixed before any job is submitted and are not changed once numbers are in.
+**Status: run 2026-11-06.** Day-0 job 27581724 (es_debug, 1 GPU); training jobs 27582368 (seed 0,
+1:31 wall) and 27582369 (seed 1, 1:13 wall), es_normal, 4 GPUs each; evals 27583980 / 27584676. The
+rules below were fixed before any job was submitted and were not changed once numbers were in.
+
+**Verdict: unstable at this scale (the seeds split), decided by Rule 2.** Both seeds pass Rule 1: step
+150 beats the format-fixed prompted baseline (0.678 recall@9) by +0.203 [+0.160, +0.245] (seed 0) and
++0.217 [+0.175, +0.260] (seed 1), with all_gold@9 up by +0.35 / +0.37, so H2 (the gain is at most a
+format effect) is false on both seeds. Rule 2 splits: in Exp 06's harness T seed 1 keeps the gain
+(−0.037 [−0.070, −0.005], as run2 did) and seed 0 loses about half of it (−0.083 [−0.125, −0.040], CI
+entirely below −0.03). The seed gap in core is 0.015, so no third seed was run.
 
 **Question.** Qwen3 models carry a lot more RL post-training than Qwen2.5. The claim to test, raised
 by a reader of the repo: on such a model, GRPO with our recipe mostly teaches the harness (emit the
@@ -104,9 +112,112 @@ PYTHONPATH=. python experiments/07-qwen3/analyze.py
 
 ## Results
 
-Not yet run. Fill in: the day-0 numbers (fit, NaN check, zero-variance share), the eval table, Rule 1
-and Rule 2 per seed with CIs, the seed gap and whether seed 2 ran, training curves, the side
-prediction. One-sentence verdict at the top of this file, naming the rule it was decided by.
+All evals: 200 eval questions, greedy, core-v1 corpus and BM25; paired Δ = 10k bootstrap, 95 % CI.
+Raw numbers in `out/eval.json`, curves in `out/curves.png`, episodes in `out/examples.txt`.
+
+### Day-0 checks (job 27581724, 13 min)
+
+1. vLLM 0.19 serves `Qwen/Qwen3-1.7B` with the sm_75 flags (up in ~2.5 min, KV cache 4.83 GiB) and
+   loads a LoRA at runtime; the step-1 adapter answered 16 eval questions through the agent.
+2. One trainer step on 32 kept episodes (1,060 model tokens, max sequence 1,310): peak 3.85 GiB (run2
+   on Qwen2.5: 3.69), every fp32 log-prob finite (min −7.45, mean −0.14), parameters finite after the
+   step. No fallback to 0.6B needed.
+3. Step-0 variance: 500 train questions × G=8 at temperature 1, core reward with w_step 0: **32 % of
+   groups have nonzero reward variance** (Qwen2.5, Exp 04: 97 %). Above the 5 % stop rule, so the runs
+   went ahead, but two thirds of every batch is filtered from the start. Sampled recall@9 0.647
+   against 0.678 greedy: Qwen3's temperature-1 samples are close to its greedy output.
+4. Prompt checks: Qwen2.5 prompts byte-identical to core-v1 (no template kwarg); the Qwen3 generation
+   prompt ends in `<think>\n\n</think>\n\n`; `<think>` is not a special token, so `think_turns`
+   would see it. It never appeared: 0 `<think>` turns and 0 truncated turns in every eval and every
+   training step of both seeds.
+
+### Eval table
+
+| system | recall@9 | all_gold@9 | nDCG@9 | recall@3 (1st query) | searches | format | tokens / ep | ends |
+|---|---|---|---|---|---|---|---|---|
+| prompted Qwen3, core (**baseline**) | 0.678 | 0.450 | 0.652 | 0.568 | 2.00 | 1.000 | 31 | done 199 |
+| prompted Qwen3, Exp 02 layout | 0.658 | 0.420 | 0.641 | 0.568 | 1.51 | 1.000 | 25 | done 199 |
+| seed 0 step 150, core | 0.880 | 0.795 | 0.751 | 0.517 | 3.00 | 1.000 | 58 | max 200 |
+| seed 0 step 150, harness T | 0.798 | 0.675 | 0.687 | 0.512 | 2.97 | 1.000 | 103 | max 194, done 6 |
+| seed 1 step 150, core | 0.895 | 0.820 | 0.760 | 0.522 | 3.00 | 1.000 | 41 | max 200 |
+| seed 1 step 150, harness T | 0.858 | 0.755 | 0.738 | 0.520 | 2.99 | 0.995 | 48 | max 198, done 1, malformed 1 |
+| Qwen2.5 prompted, core (Exp 01) | 0.620 | 0.330 | 0.624 | 0.525 | 2.08 | 0.945 | 42 | done 118, max 71, malformed 11 |
+| Qwen2.5 run2 step 150, core (Exp 01) | 0.915 | 0.850 | 0.759 | 0.490 | 2.97 | 1.000 | 40 | max 194, done 6 |
+
+The format-fixed baseline is the core layout (the Exp 02 layout is 0.020 [−0.040, 0.000] lower, with
+fewer searches). Side prediction: the baseline is 0.678, not ≥ 0.85, so it does not fire; prompted
+Qwen3 starts where Qwen2.5's *format-fixed* baseline is (0.675, Exp 02) and already has format
+validity 1.000 untrained (Qwen2.5: 0.945).
+
+### Rule 1, gain beyond format (step 150 in core minus the baseline)
+
+| seed | Δ recall@9 | Δ all_gold@9 | Δ recall@3 (1st query) | Δ searches | pass |
+|---|---|---|---|---|---|
+| 0 | +0.203 [+0.160, +0.245] | +0.345 [+0.270, +0.420] | −0.050 [−0.090, −0.013] | +0.995 | yes |
+| 1 | +0.217 [+0.175, +0.260] | +0.370 [+0.295, +0.445] | −0.045 [−0.083, −0.010] | +0.995 | yes |
+
+"Query behaviour moved" was read as: the paired CI of all_gold@9 or of recall@3 excludes zero (it
+does for both, on both seeds). Both seeds pass. The gain is 0.20–0.22 against run2's 0.295 on Qwen2.5,
+from a higher start to a lower end (0.880 / 0.895 vs 0.915).
+
+### Rule 2, transfer (step 150 in harness T minus its own core eval)
+
+| seed | Δ recall@9 | Δ all_gold@9 | Δ nDCG@9 | T recall@9 > baseline | format in T | pass |
+|---|---|---|---|---|---|---|
+| 0 | −0.083 [−0.125, −0.040] | −0.120 [−0.185, −0.055] | −0.064 [−0.098, −0.032] | 0.798 > 0.678 | 1.000 | **no** (CI below −0.03) |
+| 1 | −0.037 [−0.070, −0.005] | −0.065 [−0.120, −0.010] | −0.022 [−0.048, +0.002] | 0.858 > 0.678 | 0.995 | yes |
+
+Neither seed "could not act" (format ≥ 0.995 in T) and neither wrote an old token in T (0 of ~1,200
+turns), so the renamed tags are not what seed 0 loses on. For reference, run2 (Qwen2.5) lost −0.035
+[−0.062, −0.010] in the same harness (Exp 06).
+
+**Seed rule.** |0.880 − 0.895| = 0.015 (paired −0.015 [−0.043, +0.013]), under 0.03: no seed 2.
+
+### Training (curves in `out/curves.png`, run2 in grey)
+
+| run | train recall@9 steps 0–9 → 125–149 | searches 0–9 → 125–149 | groups filtered (mean) | steps without update | wall |
+|---|---|---|---|---|---|
+| run2, Qwen2.5 | 0.65 → 0.905 | 2.59 → 2.99 | 0.67 (0.18 at the start, 0.80 at the end) | 2 | 1:40 |
+| seed 0, Qwen3 | 0.77 → 0.89 | 2.62 → 3.00 | 0.79 (0.68 → 0.84) | 4 | 1:31 |
+| seed 1, Qwen3 | 0.71 → 0.89 | 2.00 → 3.00 | 0.83 (0.70 → 0.85) | 4 | 1:13 |
+
+Format validity stays ≥ 0.99 on both seeds for the whole run (run2 climbed from 0.89). Seed 0 reached
+3 searches per episode by step ~20, seed 1 only by step ~40 and dipped to 2.4 around step 90 before
+recovering. Qwen3 trains on a fifth of each batch for the whole run; Qwen2.5 trained on most of it
+early on. Both end at the same train recall as run2 within noise.
+
+### What the trained Qwen3 does
+
+- **Never stops.** Prompted Qwen3 ends 199/200 episodes with `<done/>` after 2 searches; both trained
+  seeds end 200/200 at the search cap in core (run2: 194/200). With w_step 0 the third search is free.
+- **Splits the question.** all_gold@9 rises by 0.35, but recall@3 of the *first* query falls by 0.05 on
+  both seeds: the trained model opens with one entity and leaves the rest to later queries (prompted:
+  `<search>Maria Golovin English language opera composer</search>` twice, then done, recall 0.5;
+  trained seed 1: `Italian-American composer and librettist`, `Maria Golovin English language opera`,
+  `Maria Golovin composer`, recall 1.0). Repeated identical queries drop from 102/200 episodes
+  (prompted) to 3/200 (seed 0) and 17/200 (seed 1).
+- **The seeds differ in style, and the style decides Rule 2.** Seed 1 writes the bare action in 600/600
+  core turns (median 13 tokens). Seed 0 opens a third of its core turns with a "First I need …"
+  sentence (58 tokens per episode). Harness T's prompt asks for one or two sentences per turn: seed 1
+  ignores it (bare in 538/599 turns, 48 tokens per episode), seed 0 follows it in 598/600 turns, 103
+  tokens per episode, and its sentences state guesses that then steer the queries, e.g. *"The airplane
+  is the B-17 Flying Fortress. Now I need the name of the 514th Flight Test Squadron."* Seed 0 also
+  repeats a query in 44/200 T episodes (3/200 in core; seed 1: 31 vs 17). Two seeds are one
+  observation, not a mechanism; the pattern is written down as a hypothesis for a follow-up.
+
+Three verbatim episodes per seed (trained hit where prompted missed, trained miss, hit in core but
+miss in T) are in `out/examples.txt`; seed 0 has 76 / 41 / 36 of each, seed 1 80 / 36 / 23.
+
+### Reading
+
+Pre-registered reading: the recipe teaches search on Qwen3 only if every seed passes both rules, H2
+holds if every seed fails one, and a split is "unstable at this scale". The split is not between
+"learned search" and "learned the harness": both seeds clear Rule 1 by 0.17 or more at the low end of
+the CI, which no format story explains (Exp 02 bounds format at 0.055 on Qwen2.5, and Qwen3's format is
+1.000 before training). What is unstable is how much of the gain survives a new harness, and that
+tracks a stylistic difference between the seeds that the recipe does not control. Compared with run2,
+Qwen3 starts 0.06 higher, gains 0.08 less, ends 0.02–0.035 lower, and offers GRPO a third of the
+groups with any signal.
 
 ## Limitations (to keep whatever the result)
 

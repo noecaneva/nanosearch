@@ -121,6 +121,31 @@ transfers at every stage; a constant harness tax of about 0.04 remains. Format s
 and no adapter ever wrote an old token in T (0 of ~2,300 turns). Same-job rerun noise: 197/200 identical
 episodes, Δ +0.003. One seed, one model, same-author harnesses.
 
+## Exp 07: the run2 recipe on Qwen3-1.7B, two seeds (200 eval questions, greedy)
+
+Same recipe as run2 (`--lr 5e-5 --w_step 0`, LoRA r=16, G=8, 150 steps), thinking off, seeds 0 and 1.
+Pre-registered rules in `experiments/07-qwen3/README.md`: Rule 1 = step 150 beats the format-fixed
+prompted baseline by > 0.03 with a CI excluding zero and the query behaviour moved; Rule 2 = the drop
+in Exp 06's harness T has a CI reaching −0.03. Paired Δ, 10k bootstrap, 95 % CI.
+
+| system | recall@9 | all_gold@9 | searches | format | Δ vs baseline (Rule 1) | Δ T − core (Rule 2) |
+|---|---|---|---|---|---|---|
+| prompted Qwen3, core (baseline) | 0.678 | 0.450 | 2.00 | 1.000 | – | – |
+| prompted Qwen3, Exp 02 layout | 0.658 | 0.420 | 1.51 | 1.000 | – | – |
+| seed 0, step 150, core / T | 0.880 / 0.798 | 0.795 / 0.675 | 3.00 / 2.97 | 1.000 / 1.000 | +0.203 [+0.160, +0.245] | −0.083 [−0.125, −0.040] |
+| seed 1, step 150, core / T | 0.895 / 0.858 | 0.820 / 0.755 | 3.00 / 2.99 | 1.000 / 0.995 | +0.217 [+0.175, +0.260] | −0.037 [−0.070, −0.005] |
+| Qwen2.5 run2 (Exp 01 / 06) | 0.915 / 0.880 | 0.850 / 0.815 | 2.97 | 1.000 | +0.295 (vs 0.620) | −0.035 [−0.062, −0.010] |
+
+**Unstable at this scale (seeds split), decided by Rule 2.** Both seeds pass Rule 1 (all_gold@9 +0.35,
+first-query recall@3 −0.05: the trained model splits the question and never stops before the search
+cap), so "the gain is only format" is false on Qwen3 as on Qwen2.5. In harness T seed 1 keeps the gain
+like run2 did, seed 0 loses half of it; neither wrote an old token, both keep format ≥ 0.995. The seed
+that loses more is the one that follows T's "write one or two sentences" instruction and states
+guessed facts before each query. Seed gap in core 0.015, no third seed. Day 0: Qwen3-1.7B fits the
+2080 Ti trainer (3.85 GiB), log-probs finite in fp16, but only 32 % of step-0 groups carry reward
+variance (Qwen2.5: 97 %), and training filters ~80 % of groups throughout. 0 `<think>` turns and 0
+truncated turns anywhere. Two seeds, one model size, recipe tuned on Qwen2.5.
+
 ## Engineering: trainer on 2 GPUs (no result change)
 
 `NTRAIN=2` in `experiments/01-hotpotqa-grpo/run.sh` runs 2 vLLM servers + 2 trainer GPUs (torch.distributed)

@@ -73,6 +73,10 @@ Full write-up with training curves, three verbatim episodes and the reward-hacki
 - Next: 0.5B vs 1.5B; a `<select>` action so the model cannot win by searching everything;
   calibrated stopping; out-of-distribution eval (MuSiQue); distillation from a large model's
   search traces; messier real-world corpora.
+- **07 – the run2 recipe on Qwen3-1.7B** (`experiments/07-qwen3/`): same recipe, thinking off, two
+  seeds. Both gain +0.20 / +0.22 recall@9 over the format-fixed prompted baseline (0.678 → 0.880 /
+  0.895), so the gain is not a format effect; in Exp 06's harness T one seed keeps it (−0.037) and the
+  other loses half (−0.083). Unstable at this scale. Only 32 % of step-0 groups carry reward variance.
 
 ## Run
 

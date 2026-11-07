@@ -1,0 +1,89 @@
+prompted Qwen3 in prompted core (baseline), first 2 episodes
+
+Question: Which Italian-American composer and librettist wrote the English language opera, Maria Golovin?
+Gold: Gian Carlo Menotti; Maria Golovin
+[prompted] turn 1 (search, 14 tok): <search>Maria Golovin English language opera composer</search>
+[prompted] turn 2 (search, 14 tok): <search>Maria Golovin English language opera composer</search>
+[prompted] turn 3 (done, 3 tok): <done/>
+[prompted] retrieved: Maria Golovin; Hôtel de Pékin; List of operas by Handel
+[prompted] end done, searches 2, recall@9 0.5
+
+Question: Steven Covey, the father of Sean Covey, wrote what similar sounding title to The 7 Habits of Highly Effective Teens?
+Gold: Stephen Covey; The 7 Habits of Highly Effective Teens
+[prompted] turn 1 (search, 14 tok): <search>Steven Covey father of Sean Covey</search>
+[prompted] turn 2 (search, 17 tok): <search>The 7 Habits of Highly Effective Teens similar sounding title</search>
+[prompted] turn 3 (done, 3 tok): <done/>
+[prompted] retrieved: Sean Covey; The 7 Habits of Highly Effective Teens; FranklinCovey; Delayed judgement
+[prompted] end done, searches 2, recall@9 0.5
+
+=== s0: trained hit, prompted miss (76 such)
+Question: Which Italian-American composer and librettist wrote the English language opera, Maria Golovin?
+Gold: Gian Carlo Menotti; Maria Golovin
+[core] turn 1 (search, 34 tok): First I need the Italian-American composer and librettist who wrote the English language opera *Maria Golovin*. <search>Maria Golovin composer</search>
+
+[core] turn 2 (search, 14 tok): <search>Gian Carlo Menotti Maria Golovin</search>
+[core] turn 3 (search, 16 tok): <search>Italian-American Gian Carlo Menotti Maria Golovin</search>
+
+[core] retrieved: Maria Golovin; Maria Newman; Rainer Maria Rilke Foundation; Gian Carlo Menotti; The Old Maid and the Thief
+[core] end max_searches, searches 3, recall@9 1.0
+
+=== s0: trained miss (41 such)
+Question: Steven Covey, the father of Sean Covey, wrote what similar sounding title to The 7 Habits of Highly Effective Teens?
+Gold: Stephen Covey; The 7 Habits of Highly Effective Teens
+[core] turn 1 (search, 44 tok): First I need the title of the book written by Steven Covey similar to "The 7 Habits of Highly Effective Teens." <search>Steven Covey The 7 Habits of Highly Effective Teens</search>
+
+[core] turn 2 (search, 12 tok): <search>Steven Covey similar sounding title</search>
+[core] turn 3 (search, 21 tok): <search>Steven Covey similar sounding title The 7 Habits of Highly Effective Teens</search>
+
+[core] retrieved: The 7 Habits of Highly Effective Teens; Sean Covey; The 8th Habit; First Things First (book); Chiwetel Ejiofor
+[core] end max_searches, searches 3, recall@9 0.5
+
+=== s0: hit in core, miss in T (both shown) (36 such)
+Question: Which Italian-American composer and librettist wrote the English language opera, Maria Golovin?
+Gold: Gian Carlo Menotti; Maria Golovin
+[core] turn 1 (search, 34 tok): First I need the Italian-American composer and librettist who wrote the English language opera *Maria Golovin*. <search>Maria Golovin composer</search>
+
+[core] turn 2 (search, 14 tok): <search>Gian Carlo Menotti Maria Golovin</search>
+[core] turn 3 (search, 16 tok): <search>Italian-American Gian Carlo Menotti Maria Golovin</search>
+
+[core] retrieved: Maria Golovin; Maria Newman; Rainer Maria Rilke Foundation; Gian Carlo Menotti; The Old Maid and the Thief
+[core] end max_searches, searches 3, recall@9 1.0
+[T] turn 1 (search, 30 tok): The opera is Maria Golovin, so first I need its composer and librettist. <query>Maria Golovin composer</query>
+
+[T] turn 2 (search, 33 tok): I have the composer's name and the opera's title. Now I need the librettist. <query>Maria Golovin librettist</query>
+[T] turn 3 (search, 21 tok): I have the composer and the librettist. <query>Maria Golovin details</query>
+[T] retrieved: Maria Golovin; Maria Newman; Rainer Maria Rilke Foundation; Richard Genée; Maria Stark
+[T] end max_searches, searches 3, recall@9 0.5
+
+=== s1: trained hit, prompted miss (80 such)
+Question: Which Italian-American composer and librettist wrote the English language opera, Maria Golovin?
+Gold: Gian Carlo Menotti; Maria Golovin
+[core] turn 1 (search, 13 tok): <search>Italian-American composer and librettist</search>
+[core] turn 2 (search, 13 tok): <search>Maria Golovin English language opera</search>
+[core] turn 3 (search, 11 tok): <search>Maria Golovin composer</search>
+[core] retrieved: Gian Carlo Menotti; Cynthia Cozette Lee; Richard Genée; Maria Golovin; Hôtel de Pékin; List of operas by Handel; Maria Newman; Rainer Maria Rilke Foundation
+[core] end max_searches, searches 3, recall@9 1.0
+
+=== s1: trained miss (36 such)
+Question: Steven Covey, the father of Sean Covey, wrote what similar sounding title to The 7 Habits of Highly Effective Teens?
+Gold: Stephen Covey; The 7 Habits of Highly Effective Teens
+[core] turn 1 (search, 14 tok): <search>Steven Covey father of Sean Covey</search>
+[core] turn 2 (search, 17 tok): <search>The 7 Habits of Highly Effective Teens similar sounding title</search>
+[core] turn 3 (search, 14 tok): <search>Stephen Covey father of Sean Covey</search>
+[core] retrieved: Sean Covey; The 7 Habits of Highly Effective Teens; FranklinCovey; Delayed judgement; The 8th Habit
+[core] end max_searches, searches 3, recall@9 0.5
+
+=== s1: hit in core, miss in T (both shown) (23 such)
+Question: What is the name of the 1988 film starring Gene Bervoets that was based on the Dutch to English translated novel, "The Vanishing"?
+Gold: The Golden Egg; The Vanishing (1988 film)
+[core] turn 1 (search, 17 tok): <search>Gene Bervoets 1988 film starring</search>
+[core] turn 2 (search, 16 tok): <search> "The Vanishing" Dutch to English translated novel </search>
+[core] turn 3 (search, 15 tok): <search>Gene Bervoets film "The Vanishing"</search>
+[core] retrieved: The Vanishing (1988 film); Mississippi Burning; The Chamber (film); The Golden Egg; The Vanishing American; Vanished Planet
+[core] end max_searches, searches 3, recall@9 1.0
+[T] turn 1 (search, 16 tok): <query>Gene Bervoets 1988 film</query>
+[T] turn 2 (search, 14 tok): <query>Gene Bervoets in The Vanishing</query>
+[T] turn 3 (search, 17 tok): <query>Gene Bervoets and the novel "The Vanishing"</query>
+[T] retrieved: The Vanishing (1988 film); Mississippi Burning; Gene Nelson (baseball); Vanished Planet; The Vanishing American
+[T] end max_searches, searches 3, recall@9 0.5
+
