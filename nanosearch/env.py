@@ -23,6 +23,10 @@ harness (default CORE, Exp 06) swaps the system prompt, the two action tokens an
 a harness the model was not trained in; W rewords the prompt, T also renames the tokens
 (<query>...</query> / <stop/>). The <result> block tag is the same in every harness.
 
+Chat templates that take enable_thinking (Qwen3, Exp 07) get enable_thinking=False, so the turn
+budget goes to the action; templates without it (Qwen2.5) get no extra kwarg and their prompts stay
+byte-identical to core-v1. Each turn records n_tokens, the number of generated tokens.
+
 The environment keeps the full token sequence and a mask that is 1 on model-generated tokens and
 0 on prompt and environment tokens. The trainer uses exactly these ids and this mask.
 
@@ -176,13 +180,16 @@ class SearchEnv:
         self.separate_results, self.reminder = separate_results, reminder
         self.harness = harness
         self.system = harness.system + (f"\n\n{system_note}" if system_note else "")
+        template = getattr(tokenizer, "chat_template", None) or ""
+        self.template_kwargs = {"enable_thinking": False} if "enable_thinking" in template else {}
         if separate_results:
             # The text the chat template puts between an assistant message and the next user
             # message, and between that user message and the next assistant turn.
             a, u = "\x00ASSISTANT\x00", "\x00USER\x00"
             s = tokenizer.apply_chat_template(
                 [{"role": "user", "content": "q"}, {"role": "assistant", "content": a},
-                 {"role": "user", "content": u}], add_generation_prompt=True, tokenize=False)
+                 {"role": "user", "content": u}], add_generation_prompt=True, tokenize=False,
+                **self.template_kwargs)
             self.close_turn, self.open_turn = s.split(a)[1].split(u)
         docs = load_corpus(corpus_path) if corpus_path else load_corpus()
         self.docs = {d["doc_id"]: d for d in docs}
@@ -191,7 +198,8 @@ class SearchEnv:
     def prompt_ids(self, question):
         msgs = [{"role": "system", "content": self.system},
                 {"role": "user", "content": f"Question: {question}"}]
-        return self.tok.apply_chat_template(msgs, add_generation_prompt=True, tokenize=True)
+        return self.tok.apply_chat_template(msgs, add_generation_prompt=True, tokenize=True,
+                                            **self.template_kwargs)
 
     def result_block(self, doc_ids):
         lines = []
@@ -218,7 +226,7 @@ class SearchEnv:
             n_generated += len(gen)
             text = self.tok.decode(gen, skip_special_tokens=True)
             kind, arg = parse_turn(text, self.harness)
-            turns.append({"text": text, "action": kind, "arg": arg})
+            turns.append({"text": text, "action": kind, "arg": arg, "n_tokens": len(gen)})
             if kind != "search":
                 end = "done" if kind == "done" else f"malformed:{arg}"
                 break

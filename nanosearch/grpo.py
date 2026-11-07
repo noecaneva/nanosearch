@@ -36,7 +36,7 @@ import torch.distributed as dist
 from torch.utils.checkpoint import checkpoint
 
 from nanosearch import DATA_DIR, OUT_DIR
-from nanosearch.agent import MODEL, VLLMClient, score
+from nanosearch.agent import MODEL, VLLMClient, score, turn_counts
 from nanosearch.baselines import load_questions
 from nanosearch.env import W_STEP, SearchEnv, judge_score, reward, unsupported_titles
 from nanosearch.indexes import get_retriever
@@ -46,13 +46,13 @@ CLIP = 0.2
 ADV_EPS = 1e-4
 
 
-def build_policy(lr):
+def build_policy(lr, model_name=MODEL):
     from peft import LoraConfig, get_peft_model
     from transformers import AutoModelForCausalLM
-    model = AutoModelForCausalLM.from_pretrained(MODEL, torch_dtype=torch.float16,
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16,
                                                  attn_implementation="sdpa").cuda()
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
-    model.train()  # HF only checkpoints in train mode; Qwen2.5 has no dropout, so this is safe
+    model.train()  # HF only checkpoints in train mode; Qwen2.5/Qwen3 have no dropout, so this is safe
     model = get_peft_model(model, LoraConfig(
         r=16, lora_alpha=32, lora_dropout=0.0, task_type="CAUSAL_LM",
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]))
@@ -149,6 +149,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--run_name", required=True)
     ap.add_argument("--urls", nargs="+", default=["http://localhost:8000"])
+    ap.add_argument("--model", default=MODEL, help="base model, served by vLLM and trained here (Exp 07)")
     ap.add_argument("--steps", type=int, default=150)
     ap.add_argument("--n_prompts", type=int, default=16)
     ap.add_argument("--G", type=int, default=8)
@@ -171,7 +172,7 @@ def main():
         dist.init_process_group("nccl", timeout=datetime.timedelta(minutes=30))
     random.seed(args.seed)
     torch.manual_seed(args.seed)
-    model, params, opt = build_policy(args.lr)
+    model, params, opt = build_policy(args.lr, args.model)
     scaler = torch.amp.GradScaler("cuda")
     if world > 1:
         for p in params:
@@ -195,7 +196,7 @@ def main():
     from transformers import AutoTokenizer
     wandb.init(project="nanosearch", name=args.run_name, config=vars(args), dir=run_dir,
                mode=os.environ.get("WANDB_MODE", "offline"))
-    env = SearchEnv(AutoTokenizer.from_pretrained(MODEL), get_retriever("bm25"),
+    env = SearchEnv(AutoTokenizer.from_pretrained(args.model), get_retriever("bm25"),
                     separate_results=args.separate_results)
     questions = load_questions(os.path.join(DATA_DIR, args.train_file))
     if args.overfit:
@@ -245,6 +246,8 @@ def main():
              "n_searches": float(np.mean([e["n_searches"] for e in eps])),
              "n_generated": float(np.mean([e["n_generated"] for e in eps])),
              "query_words": float(np.mean([len(q.split()) for e in eps for q in e["queries"]] or [0])),
+             **{k: float(np.mean([turn_counts(e)[k] for e in eps]))  # Exp 07, per episode
+                for k in ("truncated_turns", "think_turns")},
              "frac_groups_filtered": 1 - keep.mean(),
              "model_tokens": int(sum(sum(e["mask"]) for e in eps)),
              "t_gen": t_gen, "t_train": time.time() - t1,

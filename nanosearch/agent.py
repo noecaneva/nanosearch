@@ -20,10 +20,18 @@ import requests
 
 from nanosearch import DATA_DIR, OUT_DIR
 from nanosearch.baselines import K, load_questions, ndcg, recall
-from nanosearch.env import CORE, HARNESSES, STOP, W_STEP, SearchEnv, reward
+from nanosearch.env import CORE, HARNESSES, STOP, TURN_TOKENS, W_STEP, SearchEnv, reward
 from nanosearch.indexes import get_retriever
 
 MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
+
+
+def turn_counts(ep):
+    """Exp 07: turns cut by the token cap before an action, and turns that contain think tags."""
+    turns = ep["turns"]
+    return {"truncated_turns": sum(t["n_tokens"] >= TURN_TOKENS and t["action"] == "malformed"
+                                   for t in turns),
+            "think_turns": sum("<think>" in t["text"] or "</think>" in t["text"] for t in turns)}
 
 
 class VLLMClient:
@@ -63,6 +71,7 @@ def score(q, ep, w_step=W_STEP):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--urls", nargs="+", default=["http://localhost:8000"])
+    ap.add_argument("--model", default=MODEL, help="base model served by vLLM (Exp 07: Qwen/Qwen3-1.7B)")
     ap.add_argument("--lora", default=None, help="name of a LoRA adapter loaded in vLLM")
     ap.add_argument("--lora_path", default=None, help="load this adapter dir into vLLM first")
     ap.add_argument("--split", default="eval")
@@ -89,10 +98,10 @@ def main():
             requests.post(f"{url}/v1/load_lora_adapter", json={
                 "lora_name": args.lora, "lora_path": args.lora_path}).raise_for_status()
     from transformers import AutoTokenizer
-    env = SearchEnv(AutoTokenizer.from_pretrained(MODEL), get_retriever("bm25"),
+    env = SearchEnv(AutoTokenizer.from_pretrained(args.model), get_retriever("bm25"),
                     separate_results=args.separate_results, reminder=not args.no_reminder,
                     system_note=args.system_note, harness=harness)
-    generate = VLLMClient(args.urls, args.lora or MODEL, stop=harness.stop)
+    generate = VLLMClient(args.urls, args.lora or args.model, stop=harness.stop)
     # Exp 06: turns that use a core-v1 action token which is not an action in this harness
     old_tokens = {CORE.search_open, CORE.done} - {harness.search_open, harness.done}
     questions = load_questions(os.path.join(DATA_DIR, f"{args.split}.jsonl"))[:args.limit]
@@ -102,6 +111,7 @@ def main():
         ep = env.run(q["question"], generate)
         ep["latency"] = time.perf_counter() - t0
         ep["old_token_turns"] = sum(any(t in turn["text"] for t in old_tokens) for turn in ep["turns"])
+        ep.update(turn_counts(ep))
         return ep
 
     t0 = time.time()
@@ -116,7 +126,8 @@ def main():
                      "gold_doc_ids": q["gold_doc_ids"], **score(q, ep),
                      **{k: ep[k] for k in ("retrieved", "queries", "turns", "end",
                                            "format_valid", "n_searches", "n_generated",
-                                           "old_token_turns", "latency")}})
+                                           "old_token_turns", "truncated_turns", "think_turns",
+                                           "latency")}})
 
     def agg(rs):
         return {m: round(float(np.mean([r[m] for r in rs])), 4)
@@ -127,11 +138,13 @@ def main():
     for r in rows:
         ends[r["end"]] = ends.get(r["end"], 0) + 1
     summary = {
-        "system": args.out_name, "model": MODEL, "lora": args.lora_path or args.lora, "k": K,
+        "system": args.out_name, "model": args.model, "lora": args.lora_path or args.lora, "k": K,
         "separate_results": args.separate_results, "reminder": not args.no_reminder,
         "system_note": args.system_note, "harness": args.harness,
         "n_questions": len(rows), **agg(rows),
         "old_token_turns": int(sum(r["old_token_turns"] for r in rows)),
+        "truncated_turns": int(sum(r["truncated_turns"] for r in rows)),
+        "think_turns": int(sum(r["think_turns"] for r in rows)),
         "by_type": {t: {"n": sum(r["type"] == t for r in rows),
                         **agg([r for r in rows if r["type"] == t])}
                     for t in sorted({r["type"] for r in rows})},
