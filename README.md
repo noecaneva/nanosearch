@@ -50,7 +50,7 @@ Full write-up with training curves, three verbatim episodes and the reward-hacki
 | `nanosearch/` | The core (`core-v1`): `corpus.py`, `indexes.py`, `baselines.py`, `env.py`, `agent.py`, `grpo.py`, `serve.sh` |
 | `experiments/NN-name/` | One directory per experiment: how it was run, what came out |
 | `checks/` | One-off hardware, vLLM, token-mask and multi-GPU gradient checks |
-| `plan/` | Private planning notes and the work log |
+| `plan/` | Planning notes and the work log |
 
 ## Experiments
 
